@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{34FB4217-2B1B-4F0C-A580-13F96534C571}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{31A703D0-20D7-4CDC-98A0-EA15EE314407}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{13BA8710-F215-4FE6-99A7-62B9A4A768DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D87CED42-863C-4DD5-9B00-831A8B0EC3B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9328C07B-6B07-41FD-A0AF-656AC9512199}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{3FF0E6AC-6085-42FF-B267-BC00FF3CBC89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HR.LeaveManagementSystem.Domain", "src\Core\HR.LeaveManagementSystem.Domain\HR.LeaveManagementSystem.Domain.csproj", "{72F2CD55-8C73-4EA3-8412-10B3BD522B7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13BA8710-F215-4FE6-99A7-62B9A4A768DA} = {34FB4217-2B1B-4F0C-A580-13F96534C571}
+		{D87CED42-863C-4DD5-9B00-831A8B0EC3B4} = {34FB4217-2B1B-4F0C-A580-13F96534C571}
+		{9328C07B-6B07-41FD-A0AF-656AC9512199} = {34FB4217-2B1B-4F0C-A580-13F96534C571}
+		{3FF0E6AC-6085-42FF-B267-BC00FF3CBC89} = {34FB4217-2B1B-4F0C-A580-13F96534C571}
+		{72F2CD55-8C73-4EA3-8412-10B3BD522B7C} = {D87CED42-863C-4DD5-9B00-831A8B0EC3B4}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72F2CD55-8C73-4EA3-8412-10B3BD522B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F2CD55-8C73-4EA3-8412-10B3BD522B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F2CD55-8C73-4EA3-8412-10B3BD522B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F2CD55-8C73-4EA3-8412-10B3BD522B7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

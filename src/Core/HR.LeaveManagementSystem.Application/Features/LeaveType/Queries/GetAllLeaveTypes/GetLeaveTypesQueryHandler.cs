@@ -20,7 +20,7 @@ public class GetLeaveTypesQueryHandler : IRequestHandler<GetLeaveTypesQuery, Lis
         GetLeaveTypesQuery request,
         CancellationToken cancellationToken)
     {
-        List<Domain.LeaveType> leaveTypes = await _leaveTypeRepository.GetAllAsync();
+        IReadOnlyCollection<Domain.LeaveType> leaveTypes = await _leaveTypeRepository.GetAllAsync();
 
         List<LeaveTypeDto> data = _mapper.Map<List<LeaveTypeDto>>(leaveTypes);
 

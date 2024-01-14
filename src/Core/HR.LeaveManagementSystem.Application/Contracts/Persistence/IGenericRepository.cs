@@ -6,7 +6,7 @@ public interface IGenericRepository<T> where T : BaseEntity
 {
     Task<IReadOnlyList<T>> GetAllAsync();
     
-    Task<T> GetByIdAsync(int id);
+    Task<T?> GetByIdAsync(int id);
     
     Task<T> CreateAsync(T entity);
     

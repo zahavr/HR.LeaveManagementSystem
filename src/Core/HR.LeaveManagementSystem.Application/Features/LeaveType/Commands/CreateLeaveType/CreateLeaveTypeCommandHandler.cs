@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using HR.LeaveManagementSystem.Application.Contracts.Logging;
 using HR.LeaveManagementSystem.Application.Contracts.Persistence;
 using HR.LeaveManagementSystem.Application.Exceptions;
@@ -14,12 +15,12 @@ public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeComm
 
     public CreateLeaveTypeCommandHandler(
         ILeaveTypeRepository leaveTypeRepository,
-        IMapper mapper,
-        IAppLogger<CreateLeaveTypeCommandHandler> logger)
+        IAppLogger<CreateLeaveTypeCommandHandler> logger,
+        IMapper mapper)
     {
         _leaveTypeRepository = leaveTypeRepository;
-        _mapper = mapper;
         _logger = logger;
+        _mapper = mapper;
     }
     
     public async Task<int> Handle(
@@ -27,7 +28,7 @@ public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeComm
         CancellationToken cancellationToken)
     {
         var validator = new CreateLeaveTypeCommandValidator(_leaveTypeRepository);
-        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+        ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
         if (validationResult.Errors.Any())
         {
             _logger.LogWarning("Validation errors in create request for {0} - {1}",
@@ -37,7 +38,7 @@ public class CreateLeaveTypeCommandHandler : IRequestHandler<CreateLeaveTypeComm
         
         var leaveTypeToCreate = _mapper.Map<Domain.LeaveType>(request);
 
-        var leaveType = await _leaveTypeRepository.CreateAsync(leaveTypeToCreate);
+        Domain.LeaveType leaveType = await _leaveTypeRepository.CreateAsync(leaveTypeToCreate);
 
         return leaveType.Id;
     }

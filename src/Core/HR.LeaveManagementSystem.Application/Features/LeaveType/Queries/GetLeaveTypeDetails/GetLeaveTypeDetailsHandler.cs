@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using HR.LeaveManagementSystem.Application.Contracts.Persistence;
 using HR.LeaveManagementSystem.Application.Exceptions;
+using HR.LeaveManagementSystem.Application.Features.LeaveType.Models;
 using MediatR;
 
-namespace HR.LeaveManagementSystem.Application.Features.LeaveType.Queries.GetAllLeaveTypeDetails;
+namespace HR.LeaveManagementSystem.Application.Features.LeaveType.Queries.GetLeaveTypeDetails;
 
 public class GetLeaveTypeDetailsHandler : IRequestHandler<GetLeaveTypeDetailsQuery, LeaveTypeDetailsDto>
 {
@@ -22,7 +23,7 @@ public class GetLeaveTypeDetailsHandler : IRequestHandler<GetLeaveTypeDetailsQue
         GetLeaveTypeDetailsQuery request,
         CancellationToken cancellationToken)
     {
-        Domain.LeaveType leaveType = await _leaveTypeRepository.GetByIdAsync(request.Id);
+        Domain.LeaveType? leaveType = await _leaveTypeRepository.GetByIdAsync(request.Id);
         
         if (leaveType is null)
             throw new NotFoundException(nameof(Domain.LeaveType), request.Id);

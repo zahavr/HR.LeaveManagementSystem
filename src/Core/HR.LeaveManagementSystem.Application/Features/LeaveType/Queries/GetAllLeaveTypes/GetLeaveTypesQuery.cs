@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using HR.LeaveManagementSystem.Application.Features.LeaveType.Models;
+using MediatR;
 
 namespace HR.LeaveManagementSystem.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
 

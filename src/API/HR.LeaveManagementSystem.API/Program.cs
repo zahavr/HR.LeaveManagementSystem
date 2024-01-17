@@ -1,3 +1,4 @@
+using HR.LeaveManagementSystem.API.Middleware;
 using HR.LeaveManagementSystem.Application;
 using HR.LeaveManagementSystem.Infrastructure;
 using HR.LeaveManagementSystem.Persistence;
@@ -24,6 +25,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

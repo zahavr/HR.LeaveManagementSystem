@@ -44,7 +44,7 @@ public class LeaveRequestController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> Post([FromBody] CreateLeaveRequestCommand createLeaveRequestCommand)
+    public async Task<ActionResult<int>> Post([FromBody] CreateLeaveRequestCommand createLeaveRequestCommand)
     {
         int result = await _mediator.Send(createLeaveRequestCommand);
         return Created(new Uri($"{Request.GetDisplayUrl()}/api/LeaveTypes/{result}"), result);

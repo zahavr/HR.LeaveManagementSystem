@@ -41,7 +41,7 @@ public class LeaveAllocationsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult> Post([FromBody] CreateLeaveAllocationCommand createLeaveAllocationCommand)
+    public async Task<ActionResult<int>> Post([FromBody] CreateLeaveAllocationCommand createLeaveAllocationCommand)
     {
         int result = await _mediator.Send(createLeaveAllocationCommand);
         return Created(new Uri($"{Request.GetDisplayUrl()}/api/leaveAllocations/{result}"), result);

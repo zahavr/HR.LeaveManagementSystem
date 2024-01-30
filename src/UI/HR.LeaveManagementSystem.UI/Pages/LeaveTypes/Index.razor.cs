@@ -1,5 +1,4 @@
-﻿using HR.LeaveManagementSystem.UI.Components.LeaveTypes;
-using HR.LeaveManagementSystem.UI.Contracts;
+﻿using HR.LeaveManagementSystem.UI.Contracts;
 using HR.LeaveManagementSystem.UI.Models.LeaveTypes;
 using Microsoft.AspNetCore.Components;
 
@@ -16,8 +15,7 @@ public partial class Index
     public List<LeaveTypeViewModel> LeaveTypes { get; set; } = new ();
 
     public string Message { get; set; } = string.Empty;
-
-    private LeaveTypeModal Modal { get; set; } = new();
+    
 
     protected void CreateLeaveType()
     {
@@ -26,8 +24,7 @@ public partial class Index
     
     protected void EditLeaveType(int id)
     {
-        Modal.Open();
-        // NavigationManager.NavigateTo("/leavetypes/edit");
+        NavigationManager.NavigateTo("/leavetypes/edit");
     }
     
     protected void DetailsLeaveType(int id)

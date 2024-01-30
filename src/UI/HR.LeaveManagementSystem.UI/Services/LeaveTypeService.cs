@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Blazored.LocalStorage;
 using HR.LeaveManagementSystem.UI.Contracts;
 using HR.LeaveManagementSystem.UI.Models.LeaveTypes;
 using HR.LeaveManagementSystem.UI.Services.Base;
@@ -11,7 +12,9 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
 
     public LeaveTypeService(
         IClient client,
-        IMapper mapper) : base(client)
+        IMapper mapper,
+        ILocalStorageService localStorageService)
+        : base(client, localStorageService)
     {
         _mapper = mapper;
     }
@@ -32,6 +35,7 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
     {
         try
         {
+            await AddBearerToken();
             CreateLeaveTypeCommand createLeaveTypeCommand = _mapper.Map<CreateLeaveTypeCommand>(leaveTypeViewModel);
             int id = await _client.LeaveTypesPOSTAsync(createLeaveTypeCommand);
             return new Response<Guid>
@@ -50,6 +54,7 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
     {
         try
         {
+            await AddBearerToken();
             UpdateLeaveTypeCommand updateLeaveTypeCommand = _mapper.Map<UpdateLeaveTypeCommand>(leaveTypeViewModel);
             await _client.LeaveTypesPUTAsync(updateLeaveTypeCommand);
             return new Response<Guid>
@@ -67,6 +72,7 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
     {
         try
         {
+            await AddBearerToken();
             await _client.LeaveTypesDELETEAsync(id);
             return new Response<Guid>
             {

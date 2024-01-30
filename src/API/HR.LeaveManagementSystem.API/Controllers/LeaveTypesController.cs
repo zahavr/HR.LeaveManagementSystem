@@ -5,12 +5,14 @@ using HR.LeaveManagementSystem.Application.Features.LeaveType.Models;
 using HR.LeaveManagementSystem.Application.Features.LeaveType.Queries.GetAllLeaveTypes;
 using HR.LeaveManagementSystem.Application.Features.LeaveType.Queries.GetLeaveTypeDetails;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HR.LeaveManagementSystem.API.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class LeaveTypesController : ControllerBase
 {

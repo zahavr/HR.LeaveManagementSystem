@@ -10,6 +10,7 @@ namespace HR.LeaveManagementSystem.UI.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+        
         public string Message { get; set; }
 
         [Inject]

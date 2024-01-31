@@ -7,16 +7,16 @@ namespace HR.LeaveManagementSystem.UI.Pages.LeaveTypes
     public partial class Details
     {
         [Inject]
-        ILeaveTypeService _client { get; set; }
+        ILeaveTypeService Client { get; set; }
 
         [Parameter]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        LeaveTypeViewModel leaveType = new LeaveTypeViewModel();
+        LeaveTypeViewModel LeaveTypeViewModel = new LeaveTypeViewModel();
 
         protected override async Task OnParametersSetAsync()
         {
-            leaveType = await _client.GetLeaveTypeDetails(id);
+            LeaveTypeViewModel = await Client.GetLeaveTypeDetails(Id);
         }
     }
 }

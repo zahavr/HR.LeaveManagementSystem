@@ -6,7 +6,6 @@ namespace HR.LeaveManagementSystem.UI.Pages
 {
     public partial class Register
     {
-
         public RegisterViewModel Model { get; set; }
 
         [Inject]

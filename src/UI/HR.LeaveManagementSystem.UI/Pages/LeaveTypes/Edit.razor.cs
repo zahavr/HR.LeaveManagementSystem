@@ -7,28 +7,30 @@ namespace HR.LeaveManagementSystem.UI.Pages.LeaveTypes
     public partial class Edit
     {
         [Inject]
-        ILeaveTypeService _client { get; set; }
+        ILeaveTypeService Client { get; set; }
 
         [Inject]
-        NavigationManager _navManager { get; set; }
+        NavigationManager NavigationManager { get; set; }
 
         [Parameter]
-        public int id { get; set; }
+        public int Id { get; set; }
+        
         public string Message { get; private set; }
+        
 
-        LeaveTypeViewModel leaveType = new LeaveTypeViewModel();
+        LeaveTypeViewModel LeaveTypeViewModel = new LeaveTypeViewModel();
 
         protected async override Task OnParametersSetAsync()
         {
-            leaveType = await _client.GetLeaveTypeDetails(id);
+            LeaveTypeViewModel = await Client.GetLeaveTypeDetails(Id);
         }
 
         async Task EditLeaveType()
         {
-            var response = await _client.UpdateLeaveType(leaveType);
+            var response = await Client.UpdateLeaveType(LeaveTypeViewModel);
             if (response.Success)
             {
-                _navManager.NavigateTo("/leavetypes/");
+                NavigationManager.NavigateTo("/leavetypes/");
             }
             Message = response.Message;
         }

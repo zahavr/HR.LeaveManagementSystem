@@ -9,7 +9,7 @@ public interface ILeaveTypeService
 
     Task<LeaveTypeViewModel> GetLeaveTypeDetails(int id);
 
-    Task<Response<Guid>> CreateLeaveTypes(LeaveTypeViewModel leaveTypeViewModel);
+    Task<Response<int>> CreateLeaveTypes(LeaveTypeViewModel leaveTypeViewModel);
 
     Task<Response<Guid>> UpdateLeaveType(LeaveTypeViewModel leaveTypeViewModel);
 

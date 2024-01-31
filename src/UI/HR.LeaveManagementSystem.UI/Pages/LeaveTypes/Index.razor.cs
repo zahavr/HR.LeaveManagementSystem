@@ -38,8 +38,8 @@ public partial class Index
 
         if (response.Success)
         {
+            LeaveTypes.Remove(LeaveTypes.Single(lt => lt.Id == id));
             StateHasChanged();
-            NavigationManager.NavigateTo($"/leavetypes/");
         }
         else
             Message = response.Message;

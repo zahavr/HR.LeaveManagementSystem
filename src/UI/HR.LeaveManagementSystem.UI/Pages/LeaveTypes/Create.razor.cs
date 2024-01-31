@@ -7,19 +7,21 @@ namespace HR.LeaveManagementSystem.UI.Pages.LeaveTypes
     public partial class Create
     {
         [Inject]
-        NavigationManager _navManager { get; set; }
+        NavigationManager NavigationManager { get; set; }
+        
         [Inject]
-        ILeaveTypeService _client { get; set; }
+        ILeaveTypeService Client { get; set; }
 
         public string Message { get; private set; }
 
         LeaveTypeViewModel leaveType = new LeaveTypeViewModel();
+        
         async Task CreateLeaveType()
         {
-            var response = await _client.CreateLeaveTypes(leaveType);
+            var response = await Client.CreateLeaveTypes(leaveType);
             if(response.Success)
             {
-                _navManager.NavigateTo("/leavetypes/");
+                NavigationManager.NavigateTo("/leavetypes/");
             }
             Message = response.Message;
         }

@@ -32,22 +32,22 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
         return _mapper.Map<LeaveTypeViewModel>(leaveType);
     }
 
-    public async Task<Response<Guid>> CreateLeaveTypes(LeaveTypeViewModel leaveTypeViewModel)
+    public async Task<Response<int>> CreateLeaveTypes(LeaveTypeViewModel leaveTypeViewModel)
     {
         try
         {
             await AddBearerToken();
             CreateLeaveTypeCommand createLeaveTypeCommand = _mapper.Map<CreateLeaveTypeCommand>(leaveTypeViewModel);
             int id = await _client.LeaveTypesPOSTAsync(createLeaveTypeCommand);
-            return new Response<Guid>
+            return new Response<int>
             {
                 Success = true,
-                Data = new Guid(id.ToString())
+                Data = id
             };
         }
         catch (ApiException e)
         {
-            return ConvertApiException<Guid>(e);
+            return ConvertApiException<int>(e);
         }
     }
 

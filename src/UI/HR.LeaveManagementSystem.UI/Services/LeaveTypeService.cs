@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Blazored.LocalStorage;
 using HR.LeaveManagementSystem.UI.Contracts;
 using HR.LeaveManagementSystem.UI.Models.LeaveTypes;
 using HR.LeaveManagementSystem.UI.Services.Base;
@@ -21,13 +20,15 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
 
     public async Task<List<LeaveTypeViewModel>> GetLeaveTypes()
     {
+        await AddBearerToken();
         ICollection<LeaveTypeDto> leaveTypes = await _client.LeaveTypesAllAsync();
         return _mapper.Map<List<LeaveTypeViewModel>>(leaveTypes);
     }
 
     public async Task<LeaveTypeViewModel> GetLeaveTypeDetails(int id)
     {
-        var leaveType = await _client.LeaveTypesGETAsync(id);
+        await AddBearerToken();
+        LeaveTypeDto leaveType = await _client.LeaveTypesGETAsync(id);
         return _mapper.Map<LeaveTypeViewModel>(leaveType);
     }
 

@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Blazored.LocalStorage;
 using HR.LeaveManagementSystem.UI.Constants;
+using HR.LeaveManagementSystem.UI.Contracts;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace HR.LeaveManagementSystem.UI.Providers;
@@ -25,7 +25,10 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         if (isTokenPresent == false)
             return new AuthenticationState(user);
 
-        string savedToken = await _localStorageService.GetItemAsync<string>(LocalStorageItems.Token);
+        string? savedToken = await _localStorageService.GetItemAsync<string>(LocalStorageItems.Token);
+        if(savedToken is null)
+            return new AuthenticationState(user);
+        
         JwtSecurityToken tokenContent = _jwtSecurityTokenHandler.ReadJwtToken(savedToken);
 
         if (tokenContent.ValidTo < DateTime.Now)

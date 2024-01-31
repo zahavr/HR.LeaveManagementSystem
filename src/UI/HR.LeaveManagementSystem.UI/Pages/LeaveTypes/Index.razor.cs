@@ -19,25 +19,28 @@ public partial class Index
 
     protected void CreateLeaveType()
     {
-        NavigationManager.NavigateTo("/leavetypes/create");
+        NavigationManager.NavigateTo("/leavetypes/create/");
     }
     
     protected void EditLeaveType(int id)
     {
-        NavigationManager.NavigateTo("/leavetypes/edit");
+        NavigationManager.NavigateTo($"/leavetypes/edit/{id}");
     }
     
     protected void DetailsLeaveType(int id)
     {
-        NavigationManager.NavigateTo("/leavetypes/details");
+        NavigationManager.NavigateTo($"/leavetypes/details/{id}");
     }
 
     protected async Task DeleteLeaveType(int id)
     {
         var response = await LeaveTypeService.DeleteLeaveType(id);
-        
-        if(response.Success)
+
+        if (response.Success)
+        {
             StateHasChanged();
+            NavigationManager.NavigateTo($"/leavetypes/");
+        }
         else
             Message = response.Message;
     }

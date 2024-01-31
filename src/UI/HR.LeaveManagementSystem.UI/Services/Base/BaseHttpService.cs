@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
-using Blazored.LocalStorage;
 using HR.LeaveManagementSystem.UI.Constants;
+using HR.LeaveManagementSystem.UI.Contracts;
 
 namespace HR.LeaveManagementSystem.UI.Services.Base;
 

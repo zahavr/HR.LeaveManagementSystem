@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Blazored.LocalStorage;
 using HR.LeaveManagementSystem.UI.Constants;
 using HR.LeaveManagementSystem.UI.Contracts;
 using HR.LeaveManagementSystem.UI.Models;
@@ -43,7 +42,7 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
             }
             return false;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             return false;
         }

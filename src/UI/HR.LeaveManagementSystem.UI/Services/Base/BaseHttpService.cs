@@ -36,12 +36,4 @@ public class BaseHttpService
                 Success = false
             }
         };
-
-    protected async Task AddBearerToken()
-    {
-        if (await _localStorageService.ContainKeyAsync(LocalStorageItems.Token))
-            _client.HttpClient.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer",
-                    await _localStorageService.GetItemAsync<string>(LocalStorageItems.Token));
-    }
 }

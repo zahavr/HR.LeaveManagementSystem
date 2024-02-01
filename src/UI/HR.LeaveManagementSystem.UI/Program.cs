@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using HR.LeaveManagementSystem.UI;
 using HR.LeaveManagementSystem.UI.Contracts;
+using HR.LeaveManagementSystem.UI.Handlers;
 using HR.LeaveManagementSystem.UI.Providers;
 using HR.LeaveManagementSystem.UI.Services;
 using HR.LeaveManagementSystem.UI.Services.Base;
@@ -12,9 +13,10 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost:7018"));
+builder.Services.AddTransient<JwtAuthorizationMessageHandler>();
 
+builder.Services.AddHttpClient<IClient, Client>(client => client.BaseAddress = new Uri("https://localhost:7018"))
+    .AddHttpMessageHandler<JwtAuthorizationMessageHandler>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 

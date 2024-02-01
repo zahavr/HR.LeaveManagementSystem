@@ -1,17 +1,23 @@
-﻿using HR.LeaveManagementSystem.Application.Contracts.Identity;
+﻿using System.Security.Claims;
+using HR.LeaveManagementSystem.Application.Contracts.Identity;
 using HR.LeaveManagementSystem.Application.Exceptions;
 using HR.LeaveManagementSystem.Application.Models.Identity;
 using HR.LeaveManagementSystem.Identity.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace HR.LeaveManagementSystem.Identity.Services;
 
 public class UserService : IUserService
 {
+    private readonly IHttpContextAccessor _contextAccessor;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserService(UserManager<ApplicationUser> userManager)
+    public UserService(
+        IHttpContextAccessor contextAccessor,
+        UserManager<ApplicationUser> userManager)
     {
+        _contextAccessor = contextAccessor;
         _userManager = userManager;
     }
     
@@ -41,4 +47,6 @@ public class UserService : IUserService
             LastName = employee.LastName
         };
     }
+
+    public string? UserId => _contextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }

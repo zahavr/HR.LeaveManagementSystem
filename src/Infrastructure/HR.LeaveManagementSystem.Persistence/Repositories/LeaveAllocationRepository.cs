@@ -52,7 +52,7 @@ public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILe
         await _context.SaveChangesAsync();
     }
 
-    public async Task<LeaveAllocation> GetEmployeeAllocations(string employeeId, int leaveTypeId)
+    public async Task<LeaveAllocation?> GetEmployeeAllocations(string employeeId, int leaveTypeId)
     {
         return await _context.LeaveAllocations
             .AsNoTracking()

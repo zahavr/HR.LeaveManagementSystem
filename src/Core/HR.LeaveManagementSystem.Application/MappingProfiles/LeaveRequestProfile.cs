@@ -11,7 +11,8 @@ public class LeaveRequestProfile : Profile
     public LeaveRequestProfile()
     {
         CreateMap<LeaveRequest, LeaveRequestListDto>().ReverseMap();
-        CreateMap<LeaveRequest, LeaveRequestDetailsDto>();
+        CreateMap<LeaveRequest, LeaveRequestDetailsDto>()
+            .ForMember(p => p.RequestedDate, opt => opt.MapFrom(q => q.DateRequested)).ReverseMap();
         CreateMap<CreateLeaveRequestCommand, LeaveRequest>();
         CreateMap<UpdateLeaveRequestCommand, LeaveRequest>();
     }

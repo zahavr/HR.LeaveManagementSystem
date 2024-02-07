@@ -13,6 +13,7 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 {
     private readonly ILeaveRequestRepository _leaveRequestRepository;
     private readonly ILeaveTypeRepository _leaveTypeRepository;
+    private readonly ILeaveAllocationRepository _leaveAllocationRepository;
     private readonly IEmailSender _emailSender;
     private readonly IAppLogger<ChangeLeaveRequestApprovalCommandHandler> _logger;
     private readonly IMapper _mapper;
@@ -20,12 +21,14 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
     public ChangeLeaveRequestApprovalCommandHandler(
         ILeaveRequestRepository leaveRequestRepository,
         ILeaveTypeRepository leaveTypeRepository,
+        ILeaveAllocationRepository leaveAllocationRepository,
         IEmailSender emailSender,
         IAppLogger<ChangeLeaveRequestApprovalCommandHandler> logger,
         IMapper mapper)
     {
         _leaveRequestRepository = leaveRequestRepository;
         _leaveTypeRepository = leaveTypeRepository;
+        _leaveAllocationRepository = leaveAllocationRepository;
         _emailSender = emailSender;
         _logger = logger;
         _mapper = mapper;
@@ -39,6 +42,18 @@ public class ChangeLeaveRequestApprovalCommandHandler : IRequestHandler<ChangeLe
 
         leaveRequest.Approved = request.Approved;
         await _leaveRequestRepository.UpdateAsync(leaveRequest);
+
+        if (request.Approved)
+        {
+            int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+            var allocation =
+                await _leaveAllocationRepository.GetEmployeeAllocations(leaveRequest.RequestEmployeeId,
+                    leaveRequest.LeaveTypeId);
+            if (allocation is null)
+                throw new NotFoundException(nameof(allocation), leaveRequest.RequestEmployeeId);
+            allocation.NumberOfDays -= daysRequested;
+            await _leaveAllocationRepository.UpdateAsync(allocation);
+        }
 
         try
         {

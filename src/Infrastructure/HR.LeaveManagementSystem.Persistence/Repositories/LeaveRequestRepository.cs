@@ -10,7 +10,7 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
     public LeaveRequestRepository(HrDatabaseContext context) : base(context)
     { }
 
-    public async Task<LeaveRequest> GetLeaveRequestWithDetails(int id)
+    public async Task<LeaveRequest?> GetLeaveRequestWithDetails(int id)
     {
         return await _context.LeaveRequests
             .AsNoTracking()
@@ -25,8 +25,8 @@ public class LeaveRequestRepository : GenericRepository<LeaveRequest>, ILeaveReq
             .Include(lr => lr.LeaveType)
             .ToListAsync();
     }
-
-    public async Task<IReadOnlyList<LeaveRequest>> GetLeaveRequestWithDetails(string employeeId)
+    
+    public async Task<IReadOnlyList<LeaveRequest>> GetLeaveRequestsWithDetails(string employeeId)
     {
         return await _context.LeaveRequests
             .AsNoTracking()

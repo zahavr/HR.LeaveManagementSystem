@@ -26,7 +26,7 @@ public class LeaveTypeService : BaseHttpService, ILeaveTypeService
 
     public async Task<LeaveTypeViewModel> GetLeaveTypeDetails(int id)
     {
-        LeaveTypeDto leaveType = await _client.LeaveTypesGETAsync(id);
+        LeaveTypeDetailsDto leaveType = await _client.LeaveTypesGETAsync(id);
         return _mapper.Map<LeaveTypeViewModel>(leaveType);
     }
 

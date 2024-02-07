@@ -13,7 +13,9 @@ public class JwtAuthorizationMessageHandler : DelegatingHandler
         _localStorageService = localStorageService;
     }
 
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken)
     {
         var token = await _localStorageService.GetItemAsync<string>(LocalStorageItems.Token);
         if (string.IsNullOrEmpty(token) is false)

@@ -9,4 +9,8 @@ public interface IAuthenticationService
     Task<bool> RegisterAsync(RegisterViewModel registerViewModel);
 
     Task Logout();
+
+    Task<bool> IsEmployee();
+
+    Task<bool> IsAdmin();
 }

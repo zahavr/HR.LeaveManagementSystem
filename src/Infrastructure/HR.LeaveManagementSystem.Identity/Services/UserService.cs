@@ -48,5 +48,5 @@ public class UserService : IUserService
         };
     }
 
-    public string? UserId => _contextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+    public string? UserId => _contextAccessor.HttpContext?.User.FindFirstValue("uid");
 }

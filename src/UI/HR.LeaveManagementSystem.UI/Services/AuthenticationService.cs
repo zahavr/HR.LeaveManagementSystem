@@ -63,4 +63,14 @@ public class AuthenticationService : BaseHttpService, IAuthenticationService
     {
         await ((ApiAuthenticationStateProvider)_stateProvider).LoggedOut();
     }
+
+    public async Task<bool> IsEmployee()
+    {
+        return await ((ApiAuthenticationStateProvider)_stateProvider).IsEmployee();
+    }
+    
+    public async Task<bool> IsAdmin()
+    {
+        return await ((ApiAuthenticationStateProvider)_stateProvider).IsAdmin();
+    }
 }

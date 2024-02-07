@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HR.LeaveManagementSystem.UI.Contracts;
+using HR.LeaveManagementSystem.UI.Models.LeaveAllocations;
 using HR.LeaveManagementSystem.UI.Models.LeaveRequests;
 using HR.LeaveManagementSystem.UI.Services.Base;
 
@@ -18,14 +19,31 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
         _mapper = mapper;
     }
 
-    public Task<AdminLeaveRequestViewViewModel> GetAdminLeaveRequestList()
+    public async Task<AdminLeaveRequestViewViewModel> GetAdminLeaveRequestList()
     {
-        throw new NotImplementedException();
+        ICollection<LeaveRequestListDto> leaveRequests = await _client.LeaveRequestAllAsync(isLoggedInUser: false);
+        
+        AdminLeaveRequestViewViewModel model = new()
+        {
+            TotalRequests = leaveRequests.Count,
+            ApprovedRequests = leaveRequests.Count(q => q.Approved == true),
+            PendingRequests = leaveRequests.Count(q => q.Approved == null),
+            RejectedRequests = leaveRequests.Count(q => q.Approved == false),
+            LeaveRequests = _mapper.Map<List<LeaveRequestViewModel>>(leaveRequests)
+        };
+        return model;
     }
 
-    public Task<EmployeeLeaveRequestViewModel> GetUserLeaveRequests()
+    public async Task<EmployeeLeaveRequestViewModel> GetUserLeaveRequests()
     {
-        throw new NotImplementedException();
+        var leaveRequest = await _client.LeaveRequestAllAsync(true);
+        var allocations = await _client.LeaveAllocationsAllAsync(true);
+        var model = new EmployeeLeaveRequestViewModel()
+        {
+            LeaveAllocations = _mapper.Map<List<LeaveAllocationViewModel>>(allocations),
+            LeaveRequests = _mapper.Map<List<LeaveRequestViewModel>>(leaveRequest)
+        };
+        return model;
     }
 
     public async Task<Response<Guid>> CreateLeaveRequest(LeaveRequestViewModel leaveRequest)
@@ -44,9 +62,10 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
         }
     }
 
-    public Task<LeaveRequestViewModel> GetLeaveRequest(int id)
+    public async Task<LeaveRequestViewModel> GetLeaveRequest(int id)
     {
-        throw new NotImplementedException();
+        LeaveRequestDetailsDto response = await _client.LeaveRequestGETAsync(id);
+        return _mapper.Map<LeaveRequestViewModel>(response);
     }
 
     public Task DeleteLeaveRequest(int id)
@@ -54,13 +73,37 @@ public class LeaveRequestService : BaseHttpService, ILeaveRequestService
         throw new NotImplementedException();
     }
 
-    public Task<Response<Guid>> ApproveLeaveRequest(int id, bool approved)
+    public async Task<Response<Guid>> ApproveLeaveRequest(int id, bool approved)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var response = new Response<Guid>();
+            var request = new ChangeLeaveRequestApprovalCommand
+            {
+                Id = id,
+                Approved = approved
+            };
+            await _client.UpdateApprovalAsync(request);
+            return response;
+        }
+        catch (ApiException ex)
+        {
+            return ConvertApiException<Guid>(ex);
+        };
     }
 
-    public Task<Response<Guid>> CancelLeaveRequest(int id)
+    public async Task<Response<Guid>> CancelLeaveRequest(int id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var response = new Response<Guid>();
+            var request = new CancelLeaveRequestCommand() { Id = id };
+            await _client.CancelRequestAsync(request);
+            return response;
+        }
+        catch (ApiException ex)
+        {
+            return ConvertApiException<Guid>(ex);
+        }
     }
 }

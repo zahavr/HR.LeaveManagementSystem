@@ -25,15 +25,13 @@ public class LeaveRequestController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LeaveRequestListDto>>> Get()
+    public async Task<ActionResult<IEnumerable<LeaveRequestListDto>>> Get(bool isLoggedInUser = false)
     {
-        List<LeaveRequestListDto> leaverRequests = await _mediator.Send(new GetLeaveRequestListQuery());
+        List<LeaveRequestListDto> leaverRequests = await _mediator.Send(new GetLeaveRequestListQuery(isLoggedInUser));
         return leaverRequests;
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
     public async Task<ActionResult<LeaveRequestDetailsDto>> Get(int id)
     {
         LeaveRequestDetailsDto leaveRequestDetails = await _mediator.Send(new GetLeaveRequestDetailsQuery(id));

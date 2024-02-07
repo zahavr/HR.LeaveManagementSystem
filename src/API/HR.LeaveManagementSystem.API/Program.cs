@@ -3,8 +3,13 @@ using HR.LeaveManagementSystem.Application;
 using HR.LeaveManagementSystem.Identity;
 using HR.LeaveManagementSystem.Infrastructure;
 using HR.LeaveManagementSystem.Persistence;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, loggerConfig) => loggerConfig
+    .WriteTo.Console()
+    .ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
@@ -35,6 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseCors("all");
 app.UseAuthentication();

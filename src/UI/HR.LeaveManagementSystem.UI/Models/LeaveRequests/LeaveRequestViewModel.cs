@@ -7,7 +7,7 @@ namespace HR.LeaveManagementSystem.UI.Models.LeaveRequests
     {
         public int Id { get; set; }
         
-        public bool Cancelled { get; set; }
+        public bool? Cancelled { get; set; }
         
         [Display(Name = "Approval State")]
         public bool? Approved { get; set; }

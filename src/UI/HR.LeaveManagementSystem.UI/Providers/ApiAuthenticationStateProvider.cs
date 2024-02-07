@@ -64,6 +64,27 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         JwtSecurityToken tokenContent = _jwtSecurityTokenHandler.ReadJwtToken(savedToken);
         List<Claim> claims = tokenContent.Claims.ToList();
         claims.Add(new Claim(ClaimTypes.Name, tokenContent.Subject));
+
         return claims;
+    }
+
+    public async Task<bool> IsEmployee()
+    {
+        var claims = await GetClaims();
+        Claim? claim = claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role);
+        if (claim is null)
+            throw new ArgumentNullException();
+        
+        return claim.Value == "Employee";
+    }
+    
+    public async Task<bool> IsAdmin()
+    {
+        var claims = await GetClaims();
+        Claim? claim = claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role);
+        if (claim is null)
+            throw new ArgumentNullException();
+        
+        return claim.Value == "Administrator";
     }
 }

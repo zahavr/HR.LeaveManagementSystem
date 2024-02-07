@@ -60,7 +60,7 @@ public class AuthService : IAuthService
             EmailConfirmed = true
         };
 
-        IdentityResult result = await _userManager.CreateAsync(user);
+        IdentityResult result = await _userManager.CreateAsync(user, request.Password);
 
         if (result.Succeeded)
         {

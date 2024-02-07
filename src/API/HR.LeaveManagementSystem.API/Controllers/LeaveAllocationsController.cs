@@ -22,15 +22,13 @@ public class LeaveAllocationsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LeaveAllocationDto>>> Get()
+    public async Task<ActionResult<IEnumerable<LeaveAllocationDto>>> Get(bool isLoggerUser)
     {
-        List<LeaveAllocationDto> leaveAllocations = await _mediator.Send(new GetAllLeaveAllocationQuery());
+        List<LeaveAllocationDto> leaveAllocations = await _mediator.Send(new GetAllLeaveAllocationQuery(isLoggerUser));
         return leaveAllocations;
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
     public async Task<ActionResult<LeaveAllocationDetailsDto>> Get(int id)
     {
         LeaveAllocationDetailsDto leaveAllocation = await _mediator.Send(new GetLeaveAllocationDetailsQuery(id));

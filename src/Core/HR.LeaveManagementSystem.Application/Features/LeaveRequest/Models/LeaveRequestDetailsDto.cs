@@ -1,9 +1,12 @@
 ﻿using HR.LeaveManagementSystem.Application.Features.LeaveType.Models;
+using HR.LeaveManagementSystem.Application.Models.Identity;
 
 namespace HR.LeaveManagementSystem.Application.Features.LeaveRequest.Models;
 
 public class LeaveRequestDetailsDto
 {
+    public int Id { get; set; }
+    
     public bool Cancelled { get; set; }
 
     public bool? Approved { get; set; }
@@ -23,4 +26,6 @@ public class LeaveRequestDetailsDto
     public int LeaveTypeId { get; set; }
 
     public LeaveTypeDto LeaveType { get; set; } = new();
+    
+    public Employee Employee { get; set; } = new();
 }

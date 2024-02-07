@@ -18,5 +18,10 @@ namespace HR.LeaveManagementSystem.UI.Pages.LeaveRequests
         {
             Model = await LeaveRequestService.GetAdminLeaveRequestList();
         }
+
+        private void GoToDetails(int id)
+        {
+            NavigationManager.NavigateTo($"/leaverequests/details/{id}");
+        }
     }
 }

@@ -32,8 +32,6 @@ public class LeaveTypesController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesDefaultResponseType]
     public async Task<ActionResult<LeaveTypeDetailsDto>> Get(int id)
     {
         LeaveTypeDetailsDto leaveType = await _mediator.Send(new GetLeaveTypeDetailsQuery(id));
